@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: #0d0d0d;
+    color: #f5f5f5;
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
+    overflow-x: hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Glassmorphism Utilities */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Brutalist Accent Lines */
+.brutal-border {
+  border: 2px solid #f5f5f5;
+}
+
+/* Text Reveal Clip Path Helper */
+.clip-text {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* ==========================================================================
+   CUSTOM BRUTALIST SCROLLBAR STYLING
+   ========================================================================== */
+
+/* 1. Chromium Browsers (Chrome, Edge, Safari, Brave) */
+::-webkit-scrollbar {
+  width: 6px; /* Razor-thin modern width */
+  height: 6px; /* Height for horizontal tracks if needed */
+}
+
+/* The structural channel beneath the thumb */
+::-webkit-scrollbar-track {
+  background: transparent; /* Allows WebGL canvas layers to show through completely */
+}
+
+/* The actual draggable interactive anchor capsule */
+::-webkit-scrollbar-thumb {
+  background: rgba(
+    249,
+    115,
+    22,
+    0.2
+  ); /* Muted translucent neon orange baseline */
+  border-radius: 100px; /* Perfectly smooth rounded capsule shape */
+  border: 1px solid rgba(249, 115, 22, 0.4); /* Sharp high-contrast outline */
+  transition: background 0.3s ease;
+}
+
+/* Dynamic glow acceleration when user hovers near the screen edge */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 115, 22, 0.8); /* Intense high-vis illumination */
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.5); /* Spatial blur aura glow */
+}
+
+/* 2. Firefox Support Layer (Standard CSS Properties) */
+@supports (scrollbar-width: thin) {
+  html {
+    scrollbar-width: thin; /* Forces minimized track footprint natively */
+    scrollbar-color: rgba(249, 115, 22, 0.3) transparent; /* Thumb color | Track color */
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(24px);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
